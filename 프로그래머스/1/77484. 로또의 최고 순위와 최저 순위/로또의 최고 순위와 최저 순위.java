@@ -10,10 +10,10 @@ class Solution {
         }
 
         int best = 7-same-mola;
-        int worst = 7-same;
+        int bad = 7-same;
         
-        if(worst>6){
-            worst = 6;
+        if(bad>6){
+            bad = 6;
         }
         if(best>6){
             best = 6;
@@ -22,6 +22,6 @@ class Solution {
             best =1;
         }
 
-        return new int[]{best, worst};
+        return new int[]{best,bad};
     }
 }
