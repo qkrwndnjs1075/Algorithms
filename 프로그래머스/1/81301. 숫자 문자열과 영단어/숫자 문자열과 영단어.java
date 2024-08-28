@@ -3,13 +3,11 @@ class Solution {
         int answer = 0;
         
         String[] arr = {"zero","one","two","three","four","five","six","seven","eight","nine"};
-        
-        for(int i = 0; i<arr.length; i++){
+        for(int i = 0; i< arr.length; i++){
             if(s.contains(arr[i])){
-                s = s.replace(arr[i], Integer.toString(i));
+               s =  s.replace(arr[i], Integer.toString(i));
             }
         }
-        
         
             
         return Integer.parseInt(s);
