@@ -2,33 +2,29 @@ import java.util.*;
 
 class Solution {
     public int solution(int x, int y, int n) {
-        if (x == y) return 0;
         
-        Queue<int[]> queue = new LinkedList<>();
-        boolean[] visited = new boolean[y + 1];
+        if(x == y) return 0;
         
-        queue.offer(new int[]{x, 0});
-        visited[x] = true;
+        int[] dp = new int[y+1];
+        for(int i=0; i<=y; i++){
+            dp[i] = Integer.MAX_VALUE;
+        }
+        dp[x] = 0;
         
-        while (!queue.isEmpty()) {
-            int[] current = queue.poll();
-            int num = current[0];
-            int count = current[1];
+        for(int i = x; i<y; i++){
+            if(dp[i] == Integer.MAX_VALUE) continue;
             
-            int[] nextNums = {num + n, num * 2, num * 3};
+            int nextOperation = dp[i] + 1;
+            int[] candidate = {i + n, i * 2, i * 3};
             
-            for (int next : nextNums) {
-                if (next == y) {
-                    return count + 1;
-                }
-                
-                if (next < y && !visited[next]) {
-                    visited[next] = true;
-                    queue.offer(new int[]{next, count + 1});
+            for(int next : candidate){
+                if(next <= y){
+                    dp[next] = Math.min(dp[next], nextOperation);
                 }
             }
+            
         }
-        
-        return -1;
+        return dp[y] == Integer.MAX_VALUE ? -1 : dp[y];
+         
     }
 }
