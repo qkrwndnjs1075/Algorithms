@@ -1,0 +1,40 @@
+SELECT
+    PRODUCT_ID,
+    PRODUCT_NAME,
+    PRODUCT_CD,
+    CATEGORY,
+    PRICE
+FROM
+    FOOD_PRODUCT
+ORDER BY
+    PRICE DESC -- 가격을 기준으로 내림차순 정렬
+LIMIT 1; -- 가장 높은 가격의 레코드 1개만 선택 (MySQL, PostgreSQL 등)
+
+-- 또는 Oracle, SQL Server의 경우:
+/*
+SELECT
+    PRODUCT_ID,
+    PRODUCT_NAME,
+    PRODUCT_CD,
+    CATEGORY,
+    PRICE
+FROM
+    FOOD_PRODUCT
+ORDER BY
+    PRICE DESC
+FETCH FIRST 1 ROW ONLY;
+*/
+
+-- 또는 표준 SQL이나 호환성이 높은 MAX()를 이용한 서브쿼리:
+/*
+SELECT
+    PRODUCT_ID,
+    PRODUCT_NAME,
+    PRODUCT_CD,
+    CATEGORY,
+    PRICE
+FROM
+    FOOD_PRODUCT
+WHERE
+    PRICE = (SELECT MAX(PRICE) FROM FOOD_PRODUCT);
+*/
