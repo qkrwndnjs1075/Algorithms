@@ -1,61 +1,60 @@
 import java.util.*;
+import java.io.*;
 
 public class Main
 {
-	public static void main(String[] args) {
-		
-		Scanner sc = new Scanner(System.in);
-		
-		int N = sc.nextInt();
-		int[] arr = new int[N];
-		
  
-		for(int i = 0; i < N; i++) {
-			arr[i] = sc.nextInt();
-		}
+    
+	public static void main(String[] args) throws Exception {
 		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		int[] arr;
+		
+		int N = Integer.parseInt(br.readLine());
+		arr = new int[N];
+		
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		for(int i = 0; i<N; i++) {
+		    arr[i] = Integer.parseInt(st.nextToken());
+		}
 		Arrays.sort(arr);
 		
-		int M = sc.nextInt();
-		
 		StringBuilder sb = new StringBuilder();
-		for(int i=0; i<M; i++){
-		   
-		    if(BinarySearch(arr,sc.nextInt()) >= 0){
+		int M = Integer.parseInt(br.readLine());
+		st = new StringTokenizer(br.readLine());
+		for(int i = 0; i<M; i++) {
+		    int key = Integer.parseInt(st.nextToken());
+		    
+		    if(binary(arr, key) >= 0) {
 		        sb.append(1).append("\n");
-		    }else{
+		    } else {
 		        sb.append(0).append("\n");
 		    }
 		    
+		    
 		}
-		System.out.println(sb);
 		
+		System.out.print(sb);
 	}
-
-
-public static int BinarySearch(int[] arr, int key){
-		     
-		    int left = 0;
-		    
-		    int right = arr.length -1;
-		    
-		    while(left<=right){
-		        
-		        int mid = (left + right) / 2;
-		        
-		        if(key < arr[mid]){
-		            right = mid - 1;
-		        }
-		        
-		        else if(key > arr[mid]){
-		            left = mid +1;
-		        }
-		        else{
-		            return mid;
-		        }
-		    }
-		        
-		        return -1;
-		        
-		}
+	
+	static int binary(int[] arr, int key) {
+	    
+	    int left = 0;
+	    int right = arr.length - 1;
+	    
+	    while(left <= right) {
+	        int mid = left + (right - left) / 2;
+	        
+	        if(arr[mid] > key) {
+	            right = mid - 1;
+	        } else if(arr[mid] < key) {
+	            left = mid + 1;
+	        } else {
+	            return mid;
+	        }
+	    }
+	    return -1;
+	    
 	}
+}
