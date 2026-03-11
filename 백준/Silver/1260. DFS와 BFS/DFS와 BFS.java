@@ -3,69 +3,78 @@ import java.io.*;
 
 public class Main {
 
+    static List<Integer>[] graph;
+    static boolean[] visited;
+    static int count = 0;
     static StringBuilder sb = new StringBuilder();
-    static boolean[] check;
-    static int[][] arr;
 
-    static int node, line, start;
+    static void dfs(int node) {
+        visited[node] = true;
+        sb.append(node).append(' ');
 
-    static Queue<Integer> q = new LinkedList<>();
+        for(int next : graph[node]) {
+            if(!visited[next]) dfs(next);
+        }
+    }
 
-    public static void main(String[] args) throws IOException {
+    static void bfs(int start) {
+        Queue<Integer> queue = new ArrayDeque<>(); 
+        visited[start] = true;
+        queue.offer(start);
 
+        while(!queue.isEmpty()) {
+            int f = queue.poll();
+            sb.append(f).append(' ');
+
+            for(int next : graph[f]) {
+                if(!visited[next]){
+                    visited[next] = true;
+                    queue.offer(next);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        node = Integer.parseInt(st.nextToken());
-        line = Integer.parseInt(st.nextToken());
-        start = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(st.nextToken());
+        int v = Integer.parseInt(st.nextToken());
+        int start = Integer.parseInt(st.nextToken());
 
-        arr = new int[node + 1][node + 1];
-        check = new boolean[node + 1];
+        graph = new ArrayList[n + 1];
 
-        for (int i = 0; i < line; i++) {
+        for (int i = 1; i <= n; i++) {
+        graph[i] = new ArrayList<>();
+        }
+
+        for(int i = 0; i<v; i++) {
             st = new StringTokenizer(br.readLine());
+
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
 
-            arr[a][b] = arr[b][a] = 1;
+            graph[a].add(b);
+            graph[b].add(a);
         }
 
-        dfs(start);
-        sb.append("\n");
-        check = new boolean[node + 1];
+        for(int i = 1; i<=n; i++) {
+            Collections.sort(graph[i]);
+        }
 
+        visited = new boolean[n + 1];
+        dfs(start);
+        sb.append('\n');
+
+        visited = new boolean[n + 1];
         bfs(start);
 
         System.out.println(sb);
-    }
 
-    public static void dfs(int start) {
-        check[start] = true;
-        sb.append(start).append(" ");
 
-        for (int i = 1; i <= node; i++) {
-            if (arr[start][i] == 1 && !check[i]) {
-                dfs(i);
-            }
-        }
-    }
-
-    public static void bfs(int start) {
-        q.add(start);
-        check[start] = true;
-
-        while (!q.isEmpty()) {
-            start = q.poll();
-            sb.append(start).append(" ");
-
-            for (int i = 1; i <= node; i++) {
-                if (arr[start][i] == 1 && !check[i]) {
-                    q.add(i);
-                    check[i] = true;
-                }
-            }
-        }
+        
     }
 }
